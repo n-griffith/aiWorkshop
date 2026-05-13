@@ -1,5 +1,6 @@
-Vulnerability Report - Plaintext Password Storage
-Description
+# Vulnerability Report - Plaintext Password Storage
+
+## Description
 
 I identified a potential security vulnerability in main.py.
 
@@ -9,19 +10,19 @@ If at any point you have concerns or questions about this process, please do not
 
 If you are NOT the correct point of contact for this report, please let me know!
 
-Summary
+## Summary
 
 Passwords are stored in plaintext in the SQLite database without hashing or encryption. Any user with access to the database file can read credentials directly.
 
-Product
+## Product
 
 aiWorkshop > task2-faultystudentrecord > main.py
 
-Tested Version
+## Tested Version
 
 Version on main branch
 
-Details
+## Details
 
 The vulnerability is located in the database table creation for user credentials.
 
@@ -29,7 +30,7 @@ The vulnerable code stores passwords directly in the database without hashing or
 
 The password field stores passwords directly without hashing or encryption. This means sensitive credentials are exposed if the SQLite database file is accessed.
 
-PoC
+## PoC
 
 Open the task2-faultystudentrecord folder.
 
@@ -43,11 +44,11 @@ Inspect the users table.
 
 The password values are visible in plaintext.
 
-Impact
+## Impact
 
 Anyone with access to the SQLite database file can obtain user credentials directly. Depending on password reuse, this could lead to unauthorized access, credential theft, or compromise of additional systems.
 
-Remediation
+## Remediation
 
 Passwords should never be stored in plaintext.
 
@@ -55,15 +56,15 @@ Use secure password hashing algorithms such as bcrypt, Argon2, or PBKDF2 before 
 
 Access to the SQLite database file should also be restricted to authorized users only.
 
-Credit
+## Credit
 
 Pedro Douetts Pedrosa
 
-Contact
+## Contact
 
 https://github.com/pedrodouettts-byte
 
-Disclosure Policy
+## Disclosure Policy
 
 The Group #5 research team is dedicated to working closely with the open source community and with projects that are affected by vulnerabilities in order to protect users and ensure coordinated disclosure.
 
