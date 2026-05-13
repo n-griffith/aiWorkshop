@@ -1,50 +1,103 @@
-# Directory Traversal Vulnerability - Arbitrary File Write
+# Vulnerability Report - Directory traversal arbitrary file write
+
+## Description
+
+I identified a potential security vulnerability in main.py.
+
+I am committed to working with you to help resolve this issue. In this report you will find everything you need to effectively coordinate a resolution of the issue.
+
+If at any point you have concerns or questions about this process, please do not hesitate to reach out to me.
+
+If you are NOT the correct point of contact for this report, please let me know!
 
 ## Summary
 
-The program lets the user choose any filename when downloading a student's image. Because the filename is not checked, it is possible to use paths like ../../hacked.txt to save the file outside the project folder.
+The program allows the user to choose any filename when downloading a student's image. The filename is not checked before being used, so a user can enter a path such as "../../hacked.txt" and make the program write a file outside the intended folder.
 
-## Severity
+## Product
 
-High
+aiWorkshop > task2-faultystudentrecord > main.py
 
-## Where the problem is
+## Tested Version
 
-In main.py, inside the download_student_image() function, the program asks the user for a new filename and then writes to that filename directly:
+Version on main branch
+
+## Details
+
+The vulnerability is in the download_student_image() function.
+
+The vulnerable code is:
 
 new_image_name = input("Enter a new file name for the image (e.g., downloaded_image.png): ")
 with open(new_image_name, "wb") as f:
-f.write(image_data)
+    f.write(image_data)
 
-The value entered by the user is passed directly to open() without any validation.
+The value of new_image_name comes directly from user input. The program does not check whether the filename contains path traversal patterns like "../". Because of this, the user can choose a path outside the current folder.
 
-## How to reproduce
-Run the program with:
+For example, entering "../../hacked.txt" causes the file to be written outside the task2-faultystudentrecord folder.
+
+## PoC
+
+Open the task2-faultystudentrecord folder.
+
+Create a demo file inside the images folder:
+
+mkdir -p images
+echo "test file" > images/demo.txt
+
+Run the program:
 
 python main.py
 
-Log in using:
+Log in with the default credentials:
 
 Username: admin
 Password: password
 
-Add a student and use an existing file (demo.txt) as the image.
-Choose option 6, which is "Download a student's image".
-Enter the student's number.
+Choose option 1 to add a student.
+
+Enter example student information:
+
+Student number: 456
+Student name: Test Student
+Contact: test@example.com
+SSN: 111-22-3333
+Image file name: demo.txt
+
+Choose option 6 to download a student's image.
+
+Enter the student number:
+
+456
+
 When asked for a new filename, enter:
 
 ../../hacked.txt
 
-The program saves the file outside the current folder.
+The program says the image was downloaded as "../../hacked.txt". This shows that the program wrote a file outside the intended folder.
 
-## What happens
+## Impact
 
-The file is written to a location chosen by the user instead of being restricted to a safe directory.
+A user can write files outside the expected directory. Depending on file permissions, this could allow a user to overwrite source code, configuration files, or other files that the program has access to.
 
-## Why this is a problem
+## Remediation
 
-A malicious user could overwrite files that the program has permission to access. This could include source code, configuration files, or other important files.
+Only allow safe filenames when downloading images.
 
-## Suggested fix
+The program should reject filenames that contain "../" or absolute paths. It should also force downloaded files to be saved inside a specific safe folder.
 
-Only allow normal filenames without ../ and save all downloaded files to a specific folder.
+A safer approach would be to use os.path.basename() to remove directory paths from the filename, or check the resolved absolute path before writing the file.
+
+## Credit
+
+Malak El Qochairi
+
+## Contact
+
+https://github.com/MalQoch
+
+## Disclosure Policy
+
+The Group #5 research team is dedicated to working closely with the open source community and with projects that are affected by a vulnerability, in order to protect users and ensure a coordinated disclosure.
+
+Our disclosure deadline for publicly disclosing a vulnerability is: 90 days after the first report to the project team.
