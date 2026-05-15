@@ -2,13 +2,17 @@
 
 ## Description
 
-The application accepts student information directly from user input without validating the values. Invalid or unsafe data can be stored in the system.
+l identified a potential security vulnerability in main.py.
+I am committed to working with you to help resolve this issue. In this report you will find everything you need to effectively coordinate a resolution of the issue.
+If at any point you have concerns or questions about this process, please do not hesitate to reach out to me.
+If you are NOT the correct point of contact for this report, please let me know!
 
 ---
 
 ## Summary
 
-Several fields such as student number, name, contact information, SSN, course, and grade are accepted without validation checks.
+Several fields in the application, including student number, name, contact information, SSN, course, and grade, are accepted directly from user input without proper validation checks. The application does not check whether the entered values are empty, written in the wrong format, too long, or outside the expected range before saving them to the database.
+The functions used to add student information and grades allow invalid or unexpected data to be stored in the system. Because of this, student records may become unreliable and could cause errors or unexpected problems in other parts of the application.
 
 ---
 
@@ -37,7 +41,7 @@ This allows incorrect or unexpected data to be saved in the database.
 
 ---
 
-## Proof of Concept (PoC)
+## PoC
 
 Example invalid inputs accepted by the application:
 - Empty student name
@@ -62,14 +66,14 @@ Add validation checks before saving data, for example:
 - check that required fields are not empty
 - validate SSN format
 - limit input length
-- check valid grade ranges
+- check that grade values are within a valid range
 - validate contact information format
 
 ---
 
 ## Credit
 
-Reported by: Farah Ahmed Hasan
+Farah Ahmed Hasan
 
 ---
 
