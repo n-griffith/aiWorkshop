@@ -3,7 +3,9 @@
 ## Description
 
 l identified a potential security vulnerability in main.py.
+
 I am committed to working with you to help resolve this issue. In this report you will find everything you need to effectively coordinate a resolution of the issue.
+
 If at any point you have concerns or questions about this process, please do not hesitate to reach out to me.
 If you are NOT the correct point of contact for this report, please let me know!
 
@@ -18,7 +20,6 @@ The functions used to add student information and grades allow invalid or unexpe
 
 ## Product
 aiWorkshop > task2-faultystudentrecord › main.py
-
 
 ---
 
@@ -54,9 +55,9 @@ Example invalid inputs accepted by the application:
 
 ## Impact
 
-Attackers or users may store incorrect or invalid data in the system.
+Attackers or users may store invalid or unexpected data in the system because the application does not properly validate user input.
 
-This can make student records unreliable and may cause problems later in the application.
+This can make student records unreliable and may lead to errors, inconsistent records, or unexpected behavior in other parts of the application and the system over time.
 
 ---
 
@@ -88,5 +89,6 @@ https://github.com/Faa208
 The Group #5 research team is dedicated to working closely with the
 open source community and with projects that are affected by vulnerabilities in order to protect users
 and ensure coordinated disclosure.
+
 Our disclosure deadline for publicly disclosing a vulnerability is: 90 days after the first report to the project team.
 
