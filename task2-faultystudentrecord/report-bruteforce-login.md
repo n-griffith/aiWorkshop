@@ -77,4 +77,4 @@ The Group #5 research team is dedicated to working closely with the open source 
 
 Our disclosure deadline for publicly disclosing a vulnerability is: 90 days after the first report to the project team.
 
-.
+..
