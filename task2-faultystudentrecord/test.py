@@ -2,6 +2,7 @@ import unittest
 import sqlite3
 import your_code  # Korvaa 'your_code' koodisi tiedoston nimellä
 import os
+import time
 
 class TestStudentDatabase(unittest.TestCase):
 
@@ -60,6 +61,24 @@ class TestStudentDatabase(unittest.TestCase):
         result = your_code.search_student(name)
         self.assertIsNotNone(result)
         self.assertEqual(result["name"], "Test Student")
+
+
+def test_login_brute_force_lockout(self):
+    # Test that login locks out after 5 failed attempts
+    import time
+    username = "admin"
+    wrong_password = "wrongpassword"
+
+    start_time = time.time()
+
+    for i in range(5):
+        result = your_code.login(username, wrong_password)
+        self.assertEqual(result, f"Incorrect username or password. Attempt {i+1}/5.")
+
+    elapsed_time = time.time() - start_time
+
+    # After 5 attempts there should be a delay of at least 30 seconds
+    self.assertGreaterEqual(elapsed_time, 30)
 
 if __name__ == '__main__':
     unittest.main()
