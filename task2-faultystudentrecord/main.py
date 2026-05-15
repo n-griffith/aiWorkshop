@@ -4,6 +4,7 @@ import hashlib
 import secrets
 import re
 import shutil
+import time
 from getpass import getpass
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -160,6 +161,9 @@ def get_safe_download_path(filename):
 
 
 def login():
+    attempts = 0
+    max_attempts = 5
+
     while True:
         username = input("Enter username: ").strip()
         password = getpass("Enter password: ")
@@ -171,7 +175,17 @@ def login():
             print("Login successful.")
             break
         else:
-            print("Incorrect username or password. Please try again.")
+            attempts += 1
+            print(f"Incorrect username or password. Attempt {attempts}/{max_attempts}.")
+            if attempts >= max_attempts:
+                print("Too many failed attempts. Please wait 30 seconds.")
+                time.sleep(30)
+                attempts = 0
+            else:
+                time.sleep(2)
+
+            
+            
 
 
 def add_student():
